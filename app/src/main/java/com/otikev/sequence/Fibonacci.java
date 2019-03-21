@@ -1,7 +1,5 @@
 package com.otikev.sequence;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +8,46 @@ import java.util.List;
  */
 public class Fibonacci {
 
-    private long fibbonacci(int n) {
-        Log.i(getClass().getSimpleName(),""+n);
-        if (n <= 1) {
-            return n;
-        } else {
-            return fibbonacci(n - 1) + fibbonacci(n - 2);
-        }
-    }
-
-    public List<Long> generate(long n) {
+    public List<Long> generateRecursive(long n) {
         List<Long> items = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            items.add(fibbonacci(i));
+            items.add(recursive(i));
         }
         return items;
+    }
+
+    public List<Long> generateIterative(long n) {
+        List<Long> items = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            items.add(iterative(i));
+        }
+        return items;
+    }
+
+    private long recursive(int n) {
+        if (n <= 1) {
+            return n;
+        } else {
+            return recursive(n - 1) + recursive(n - 2);
+        }
+    }
+
+    private static long iterative(int n) {
+        int x, y, z;
+
+        if (n == 0) {
+            return 0;
+        } else {
+            x = 1;
+            y = 1;
+            for (int i = 3; i <= n; i++) {
+                z = x + y;
+                x = y;
+                y = z;
+            }
+            return y;
+        }
     }
 }

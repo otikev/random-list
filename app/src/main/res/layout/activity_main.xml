@@ -14,8 +14,14 @@
         android:layout_width="match_parent" />
 
     <Button
-        android:id="@+id/buttonGenerate"
-        android:text="@string/generate_sequence"
+        android:id="@+id/buttonGenerateRecursive"
+        android:text="@string/generate_sequence_r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonGenerateIterative"
+        android:text="@string/generate_sequence_i"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

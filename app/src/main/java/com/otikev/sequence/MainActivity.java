@@ -19,7 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends androidx.activity.ComponentActivity {
 
     EditText etRandom;
-    Button buttonGenerate;
+    Button buttonGenerateRecursive;
+    Button buttonGenerateIterative;
     RecyclerView listViewSequence;
 
     CustomAdapter customAdapter;
@@ -37,22 +38,36 @@ public class MainActivity extends androidx.activity.ComponentActivity {
 
     void bindViews() {
         etRandom = findViewById(R.id.etRandom);
-        buttonGenerate = findViewById(R.id.buttonGenerate);
+        buttonGenerateRecursive = findViewById(R.id.buttonGenerateRecursive);
+        buttonGenerateIterative= findViewById(R.id.buttonGenerateIterative);
         listViewSequence = findViewById(R.id.listViewSequence);
         listViewSequence.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
         listViewSequence.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     void setEventListeners() {
-        buttonGenerate.setOnClickListener(new View.OnClickListener() {
+        buttonGenerateIterative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInProgress();
+                showInProgress(false);
                 clearItems();
                 final String limit = etRandom.getText().toString();
                 if (!limit.isEmpty()) {
                     hideKeyboard();
-                    generateList(limit);
+                    generateListIterative(limit);
+                }
+            }
+        });
+
+        buttonGenerateRecursive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInProgress(true);
+                clearItems();
+                final String limit = etRandom.getText().toString();
+                if (!limit.isEmpty()) {
+                    hideKeyboard();
+                    generateListRecursive(limit);
                 }
             }
         });
@@ -64,33 +79,57 @@ public class MainActivity extends androidx.activity.ComponentActivity {
         }
     }
 
-    void showInProgress() {
-        buttonGenerate.setEnabled(false);
-        buttonGenerate.setText(getString(R.string.generating));
+    void showInProgress(boolean recursive) {
+        if(recursive){
+            buttonGenerateRecursive.setText(getString(R.string.generating));
+        }else{
+            buttonGenerateIterative.setText(getString(R.string.generating));
+        }
+        buttonGenerateRecursive.setEnabled(false);
+        buttonGenerateIterative.setEnabled(false);
     }
 
-    void enableGenerateButton() {
-        buttonGenerate.setEnabled(true);
-        buttonGenerate.setText(getString(R.string.generate_sequence));
+    void enableGenerateButton(boolean recursive) {
+        if(recursive){
+            buttonGenerateRecursive.setText(getString(R.string.generate_sequence_r));
+        }else{
+            buttonGenerateIterative.setText(getString(R.string.generate_sequence_i));
+        }
+
+        buttonGenerateRecursive.setEnabled(true);
+        buttonGenerateIterative.setEnabled(true);
     }
 
-    void generateList(final String limit) {
+    void generateListRecursive(final String limit) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<Long> items = fibonacci.generate(Long.parseLong(limit));
-
-                new Handler(getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!isDestroyed()) {
-                            enableGenerateButton();
-                            populateList(items);
-                        }
-                    }
-                });
+                final List<Long> items = fibonacci.generateRecursive(Long.parseLong(limit));
+                updateUi(items,true);
             }
         }).start();
+    }
+
+    void generateListIterative(final String limit) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Long> items = fibonacci.generateIterative(Long.parseLong(limit));
+                updateUi(items,false);
+            }
+        }).start();
+    }
+
+    void updateUi(final List<Long> items,final boolean recursive){
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (!isDestroyed()) {
+                    enableGenerateButton(recursive);
+                    populateList(items);
+                }
+            }
+        });
     }
 
     void populateList(List<Long> items) {
