@@ -1,24 +1,28 @@
 package com.otikev.sequence;
 
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.kokonetworks.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MainActivity extends androidx.activity.ComponentActivity {
 
     EditText etRandom;
     Button buttonGenerate;
-    ListView listItems;
+    RecyclerView listViewSequence;
+
+    CustomAdapter customAdapter;
 
     Fibonacci fibonacci = new Fibonacci();
 
@@ -34,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     void bindViews() {
         etRandom = findViewById(R.id.etRandom);
         buttonGenerate = findViewById(R.id.buttonGenerate);
-        listItems = findViewById(R.id.listItems);
+        listViewSequence = findViewById(R.id.listViewSequence);
+        listViewSequence.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+        listViewSequence.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     void setEventListeners() {
@@ -53,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void clearItems() {
-        populateList(new ArrayList<Long>());
+        if(customAdapter!= null){
+            customAdapter.setDataset(new ArrayList<Long>());
+        }
     }
 
     void showInProgress() {
@@ -86,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void populateList(List<Long> items) {
-        listItems.setAdapter(new CustomAdapter(getApplicationContext(), items));
+        customAdapter =new CustomAdapter(items);
+        listViewSequence.setAdapter(customAdapter);
     }
 
     void hideKeyboard() {
