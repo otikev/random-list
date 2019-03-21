@@ -1,4 +1,4 @@
-package com.kokonetworks.myapplication;
+package com.otikev.sequence;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.kokonetworks.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.kokonetworks.myapplication;
+package com.otikev.sequence;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.kokonetworks.myapplication.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.kokonetworks.myapplication;
+package com.otikev.sequence;
 
 import android.util.Log;
 
