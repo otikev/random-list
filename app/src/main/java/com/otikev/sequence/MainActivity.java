@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 showInProgress();
                 clearItems();
                 final String limit = etRandom.getText().toString();
-                if(!limit.isEmpty()){
+                if (!limit.isEmpty()) {
                     hideKeyboard();
                     generateList(limit);
                 }
@@ -52,20 +52,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void clearItems(){
+    void clearItems() {
         populateList(new ArrayList<Long>());
     }
-    void showInProgress(){
+
+    void showInProgress() {
         buttonGenerate.setEnabled(false);
         buttonGenerate.setText(getString(R.string.generating));
     }
 
-    void enableGenerateButton(){
+    void enableGenerateButton() {
         buttonGenerate.setEnabled(true);
         buttonGenerate.setText(getString(R.string.generate_sequence));
     }
 
-    void generateList(final String limit){
+    void generateList(final String limit) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,15 +75,17 @@ public class MainActivity extends AppCompatActivity {
                 new Handler(getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        enableGenerateButton();
-                        populateList( items);
+                        if (!isDestroyed()) {
+                            enableGenerateButton();
+                            populateList(items);
+                        }
                     }
                 });
             }
         }).start();
     }
 
-    void populateList(List<Long> items){
+    void populateList(List<Long> items) {
         listItems.setAdapter(new CustomAdapter(getApplicationContext(), items));
     }
 
