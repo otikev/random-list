@@ -14,19 +14,19 @@ import java.util.List;
 /**
  * Created by kevin on 21/03/19 at 18:36
  */
-public class CustomAdapter extends ArrayAdapter<String> {
+public class CustomAdapter extends ArrayAdapter<Long> {
     /**
      * Constructor
      *
      * @param context  The current context.
      */
-    public CustomAdapter(Context context, List<String> items ) {
+    public CustomAdapter(Context context, List<Long> items ) {
         super(context, R.layout.list_item,items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String item = getItem(position);
+        Long item = getItem(position);
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -40,7 +40,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.itemText.setText(item);
+        viewHolder.itemText.setText(String.valueOf(item));
 
         return convertView;
     }
