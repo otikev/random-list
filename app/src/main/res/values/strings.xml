@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Fibonacci</string>
     <string name="generate_sequence">Generate Sequence</string>
     <string name="generating">Generating...</string>
 </resources>
