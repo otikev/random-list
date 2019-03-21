@@ -35,13 +35,11 @@ public class Fibonacci {
     }
 
     private static long iterative(int n) {
-        int x, y, z;
+        int x = 1, y = 1, z;
 
         if (n == 0) {
             return 0;
         } else {
-            x = 1;
-            y = 1;
             for (int i = 3; i <= n; i++) {
                 z = x + y;
                 x = y;

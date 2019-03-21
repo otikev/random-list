@@ -49,12 +49,10 @@ public class MainActivity extends androidx.activity.ComponentActivity {
         buttonGenerateIterative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInProgress(false);
-                clearItems();
+
                 final String limit = etRandom.getText().toString();
                 if (!limit.isEmpty()) {
-                    hideKeyboard();
-                    generateListIterative(limit);
+                    generate(false,limit);
                 }
             }
         });
@@ -62,15 +60,24 @@ public class MainActivity extends androidx.activity.ComponentActivity {
         buttonGenerateRecursive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInProgress(true);
-                clearItems();
+
                 final String limit = etRandom.getText().toString();
                 if (!limit.isEmpty()) {
-                    hideKeyboard();
-                    generateListRecursive(limit);
+                    generate(true,limit);
                 }
             }
         });
+    }
+
+    void generate(boolean recursive, String limit){
+        showInProgress(recursive);
+        clearItems();
+        hideKeyboard();
+        if(recursive){
+            generateListRecursive(limit);
+        }else{
+            generateListIterative(limit);
+        }
     }
 
     void clearItems() {
