@@ -25,11 +25,20 @@ public class MainActivity extends AppCompatActivity {
         setEventListeners();
     }
 
+    public static int fibbonacci(int n) {
+        if (n <= 1) {
+            return n;
+        } else {
+            return fibbonacci(n - 1) + fibbonacci(n - 2);
+        }
+    }
+
     List<String> random(int n) {
         List<String> items = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            items.add(String.valueOf(Math.random()));
+
+            items.add(String.valueOf(fibbonacci(i)));
         }
         return items;
     }
