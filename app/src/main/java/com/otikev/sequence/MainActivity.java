@@ -7,7 +7,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.kokonetworks.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
